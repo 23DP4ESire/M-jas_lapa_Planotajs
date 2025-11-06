@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planotajs</title>
+    <link rel="stylesheet" href="src/css/main.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">Planotajs</h1>
+                <nav class="nav">
+                    <button class="hamburger" id="hamburgerMenu" aria-label="Menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <ul class="nav-list">
+                        <li><a href="#home" class="nav-link active">Home</a></li>
+                        <li><a href="#about" class="nav-link">About</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="nav-link">Services</a>
+                            <ul class="dropdown-menu">
+                                <a href="#" class="dropdown-item">Plānošana</a>
+                                <a href="#" class="dropdown-item">Projektēšana</a>
+                                <a href="#" class="dropdown-item">Konsultācijas</a>
+                                <a href="#" class="dropdown-item">Būvniecība</a>
+                            </ul>
+                        </li>
+                        <li><a href="#contact" class="nav-link">Contact</a></li>
+                        <li class="theme-switch">
+                            <button id="darkModeToggle" class="dark-mode-toggle">
+                                <span class="toggle-text">Nakts režīms</span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="content-wrapper">
+                <section class="main-content">
+                    <div class="search-container">
+                        <button class="search-icon" id="searchToggle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </button>
+                        <input type="text" id="searchInput" class="search-input" placeholder="Meklēt plānus..." style="display: none;">
+                    </div>
+                    <h1 class="main-title">Lai jums jauks apmeklejums planotaja.</h1>
+                    <h2 class="subtitle">Planotajs palidz jums planot jusu nakotni.</h2>
+                    <p class="description">Planotajs ir jauns biznes un ir gatavs palīdzēt visiem.</p>
+                    <img src="src/img/skech.jpg" width="600" height="400"alt="Attels" class="main-image">
+                    <p class="secondary-text">Planotajs ir majas planu piedāvātājs bet arī ir iespeja sagatavot jūsu sapņu projektu.</p>
+
+                    <div class="cards-container">
+                        <div class="card">
+                            <img src="src/img/klasiska maja.jpg" alt="Plāns 1" class="card-image">
+                            <h3 class="card-title">Klasiskais Plāns</h3>
+                            <p class="card-description">Elegants un funkcionāls mājas plāns ar vecmodīgu pieskārienu.</p>
+                            <button class="card-button">Apskatīt vairāk</button>
+                        </div>
+                        <div class="card">
+                            <img src="src/img/moderna maja.jpg" alt="Plāns 2" class="card-image">
+                            <h3 class="card-title">Modernais Plāns</h3>
+                            <p class="card-description">Inovatīvs dizains ar plašām telpām un atvērtu plānojumu.</p>
+                            <button class="card-button">Apskatīt vairāk</button>
+                        </div>
+                        <div class="card">
+                            <img src="src/img/eko maja.jpg" alt="Plāns 3" class="card-image">
+                            <h3 class="card-title">Eko Plāns</h3>
+                            <p class="card-description">Dabai draudzīgs mājas plāns ar energoefektīviem risinājumiem.</p>
+                            <button class="card-button">Apskatīt vairāk</button>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">Papildus informācija</h3>
+                    <ul class="article-list">
+                        <li class="article-item">
+                            <a href="#" class="article-link">Mājas projekti</a>
+                        </li>
+                        <li class="article-item">
+                            <a href="#" class="article-link">Jaunākie stili</a>
+                        </li>
+                        <li class="article-item">
+                            <a href="#" class="article-link">Mūsu komanda</a>
+                        </li>
+                        <li class="article-item">
+                            <a href="#" class="article-link">Par mums</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="sidebar-section">
+                        <h4 class="section-title">Info</h4>
+                        <p class="section-text">Šeit jūs varat atrast informāciju par mājas plānošanu, dizainu un būvniecību. Mēs bieži atjaunojam informāciju par majas dizaina stiliem untrendiem.</p>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h4 class="section-title">Sazināties ar mums</h4>
+                        <form id="contactForm" class="contact-form" novalidate>
+                            <div class="form-group">
+                                <label for="name">Vārds: </label>
+                                <input type="text" id="name" name="name" class="form-input" required>
+                                <span class="error-message" id="nameError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-pasts: </label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                                <span class="error-message" id="emailError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Ziņojums: </label>
+                                <textarea id="message" name="message" class="form-input" rows="4" required></textarea>
+                                <span class="error-message" id="messageError"></span>
+                            </div>
+                            <button type="submit" class="form-submit">Sūtīt ziņojumu</button>
+                        </form>
+                        <div id="formSuccess" class="success-message" style="display: none;">
+                            Paldies! Jūsu ziņojums ir veiksmīgi nosūtīts.
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <p class="copyright">&copy; 2025 Mana Tīmekļa Vietne. Visas tiesības aizsargātas.</p>
+                </div>
+                <div class="footer-section">
+                    <div class="social-links">
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">Twitter</a>
+                        <a href="#" class="social-link">Instagram</a>
+                        <a href="#" class="social-link">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal" id="cardModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title"></h2>
+            <img src="" alt="" class="modal-image">
+            <p class="modal-description"></p>
+        </div>
+    </div>
+
+    <script src="src/js/main.js"></script>
+</body>
+</html>
