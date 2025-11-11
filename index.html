@@ -47,7 +47,7 @@
                 <section class="main-content">
                     <div class="search-container">
                         <button class="search-icon" id="searchToggle">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
@@ -60,7 +60,16 @@
                     <img src="src/img/skech.jpg" width="600" height="400"alt="Attels" class="main-image">
                     <p class="secondary-text">Planotajs ir majas planu piedāvātājs bet arī ir iespeja sagatavot jūsu sapņu projektu.</p>
 
-                    <div class="cards-container">
+                    <button type="button" class="button">Pievienot</button>
+
+                    <div class="create-card-form" id="createCardForm" style="margin:16px 0; display:none;">
+                        <input id="title" type="text" placeholder="Virsraksts" />
+                        <input id="desc" type="text" placeholder="Apraksts" />
+                        <input id="img" type="text" placeholder="Bildes URL" />
+                        <button type="button" class="button" id="createCardBtn">Izveidot kartīti</button>
+                    </div>
+
+                    <div class="cards-container" id="cards">
                         <div class="card">
                             <img src="src/img/klasiska maja.jpg" alt="Plāns 1" class="card-image">
                             <h3 class="card-title">Klasiskais Plāns</h3>
@@ -81,7 +90,6 @@
                         </div>
                     </div>
                 </section>
-                
 
                 <aside class="sidebar">
                     <h3 class="sidebar-title">Papildus informācija</h3>

@@ -161,6 +161,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+
+
+
+
+
     const modal = document.getElementById('cardModal');
     const cardButtons = document.querySelectorAll('.card-button');
     const closeModal = document.querySelector('.close-modal');
@@ -200,4 +205,94 @@ document.addEventListener('DOMContentLoaded', () => {
             hamburger.classList.remove('active');
         }
     });
+
+    const titleEl = document.getElementById('title');
+    const descEl = document.getElementById('desc');
+    const imgEl = document.getElementById('img');
+    const linkEl = document.getElementById('link');
+    const createBtn = document.querySelector('.button');
+    const createCardBtn = document.getElementById('createCardBtn');
+    const createForm = document.getElementById('createCardForm');
+    const cardsEl = document.getElementById('cards');
+
+    function isValidUrl(s){ try{ new URL(s); return true }catch(e){ return false }}
+
+    function createCardObject(){
+        return {
+            title: titleEl ? titleEl.value.trim() : '',
+            desc: descEl ? descEl.value.trim() : '',
+            img: imgEl ? imgEl.value.trim() : '',
+            link: linkEl ? linkEl.value.trim() : ''
+        };
+    }
+
+    function wireCardInteractions(el){
+        const moreBtn = el.querySelector('.card-button');
+        if(moreBtn){
+            moreBtn.addEventListener('click', () => {
+                const title = el.querySelector('.card-title')?.textContent || '';
+                const description = el.querySelector('.card-description')?.textContent || '';
+                const image = el.querySelector('img')?.src || '';
+
+                modal.querySelector('.modal-title').textContent = title;
+                modal.querySelector('.modal-description').textContent = description;
+                modal.querySelector('.modal-image').src = image;
+                modal.querySelector('.modal-image').alt = title;
+
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        const del = el.querySelector('.delete-card');
+        if(del){
+            del.addEventListener('click', () => el.remove());
+        }
+    }
+
+    function renderCard(card){
+        const el = document.createElement('div'); el.className = 'card';
+        if(card.img && isValidUrl(card.img)){
+            const im = document.createElement('img'); im.src = card.img; im.alt = card.title || 'attels'; im.className = 'card-image'; el.appendChild(im);
+        }
+        const h = document.createElement('h3'); h.textContent = card.title || 'Bez virsraksta'; h.className='card-title'; el.appendChild(h);
+        const p = document.createElement('p'); p.textContent = card.desc || ''; p.className='card-description'; el.appendChild(p);
+
+        const actions = document.createElement('div'); actions.className = 'actions';
+        if(card.link && isValidUrl(card.link)){
+            const a = document.createElement('a'); a.href = card.link; a.target = '_blank'; a.rel='noopener noreferrer'; a.textContent = 'Apmeklēt'; a.className='card-link'; actions.appendChild(a);
+        }
+        const more = document.createElement('button'); more.textContent = 'Apskatīt vairāk'; more.className='card-button'; actions.appendChild(more);
+        const del = document.createElement('button'); del.textContent = 'Dzēst'; del.className='delete-card'; actions.appendChild(del);
+        el.appendChild(actions);
+
+        if(cardsEl) cardsEl.prepend(el);
+
+        wireCardInteractions(el);
+    }
+
+    if(createBtn && createForm){
+        createBtn.addEventListener('click', () => {
+            createForm.style.display = createForm.style.display === 'none' ? 'block' : 'none';
+        });
+    }
+
+    if(createCardBtn){
+        createCardBtn.addEventListener('click', ()=>{
+            const card = createCardObject();
+            if(!card.title && !card.desc && !card.img) {
+                alert('Ievadi vismaz virsrakstu, aprakstu vai bildes URL.');
+                return;
+            }
+            renderCard(card);
+            if(titleEl) titleEl.value = '';
+            if(descEl) descEl.value = '';
+            if(imgEl) imgEl.value = '';
+            if(linkEl) linkEl.value = '';
+            createForm.style.display = 'none';
+        });
+    }
+
+    const existingCards = document.querySelectorAll('.cards-container .card');
+    existingCards.forEach(card => wireCardInteractions(card));
 });
