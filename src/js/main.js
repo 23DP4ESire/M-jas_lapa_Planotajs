@@ -215,10 +215,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const createForm = document.getElementById('createCardForm');
     const cardsEl = document.getElementById('cards');
 
+    const STORAGE_KEY = 'planotajs_cards_v1';
+
+    const loadSavedCards = () => {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return [];
+            const parsed = JSON.parse(raw);
+            if (!Array.isArray(parsed)) return [];
+            return parsed;
+        } catch (e) {
+            console.error('Failed to load saved cards', e);
+            return [];
+        }
+    };
+
+    const saveAllCards = (cards) => {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+        } catch (e) {
+            console.error('Failed to save cards', e);
+        }
+    };
+
+    const addCardToStorage = (card) => {
+        const all = loadSavedCards();
+        all.unshift(card);
+        saveAllCards(all);
+    };
+
+    const removeCardFromStorage = (id) => {
+        const all = loadSavedCards();
+        const filtered = all.filter(c => c.id !== id);
+        saveAllCards(filtered);
+    };
+
     function isValidUrl(s){ try{ new URL(s); return true }catch(e){ return false }}
 
     function createCardObject(){
         return {
+            id: Date.now().toString() + '-' + Math.floor(Math.random()*100000),
             title: titleEl ? titleEl.value.trim() : '',
             desc: descEl ? descEl.value.trim() : '',
             img: imgEl ? imgEl.value.trim() : '',
@@ -246,19 +282,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const del = el.querySelector('.delete-card');
         if(del){
-            del.addEventListener('click', () => el.remove());
+            del.addEventListener('click', () => {
+                const id = el.dataset.id;
+                if (id) removeCardFromStorage(id);
+                el.remove();
+            });
         }
     }
 
     function renderCard(card){
         const el = document.createElement('div'); el.className = 'card';
+        if (card.id) el.dataset.id = card.id;
         if(card.img && isValidUrl(card.img)){
             const im = document.createElement('img'); im.src = card.img; im.alt = card.title || 'attels'; im.className = 'card-image'; el.appendChild(im);
         }
         const h = document.createElement('h3'); h.textContent = card.title || 'Bez virsraksta'; h.className='card-title'; el.appendChild(h);
         const p = document.createElement('p'); p.textContent = card.desc || ''; p.className='card-description'; el.appendChild(p);
 
-        const actions = document.createElement('div'); actions.className = 'actions';
+    const actions = document.createElement('div'); actions.className = 'actions';
         if(card.link && isValidUrl(card.link)){
             const a = document.createElement('a'); a.href = card.link; a.target = '_blank'; a.rel='noopener noreferrer'; a.textContent = 'Apmeklēt'; a.className='card-link'; actions.appendChild(a);
         }
@@ -285,12 +326,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             renderCard(card);
+            addCardToStorage(card);
             if(titleEl) titleEl.value = '';
             if(descEl) descEl.value = '';
             if(imgEl) imgEl.value = '';
             if(linkEl) linkEl.value = '';
             createForm.style.display = 'none';
         });
+    }
+
+    const saved = loadSavedCards();
+    if (Array.isArray(saved) && saved.length) {
+        saved.slice().reverse().forEach(card => renderCard(card));
     }
 
     const existingCards = document.querySelectorAll('.cards-container .card');
